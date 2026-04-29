@@ -4,31 +4,29 @@ from node import Node
 
 
 class Tree:
-    """ Tree class for binary tree """
+    """Represent a binary search tree."""
 
     def __init__(self) -> None:
-        """ Constructor for Tree class """
+        """Initialize an empty tree."""
         self.root: Optional[Node] = None
 
     def getRoot(self) -> Optional[Node]:
-        """ Method for get root of the tree """
+        """Return the root node of the tree."""
         return self.root
 
     def add(self, data: int) -> None:
-        """ Method for add data to the tree """
+        """Insert a value into the tree."""
         if self.root is None:
             self.root = Node(data)
         else:
             self._add(data, self.root)
 
     def _add(self, data: int, node: Node) -> None:
-        """Method for add data to the tree
+        """Insert a value into the subtree rooted at ``node``.
 
         Args:
-            data (int): data to add
-
-        Returns:
-            None
+            data (int): Value to insert.
+            node (Node): Root of the subtree where the value is inserted.
         """
         if data < node.data:
             if node.left is not None:
@@ -42,13 +40,13 @@ class Tree:
                 node.right = Node(data)
 
     def find(self, data: int) -> Optional[Node]:
-        """Method for find data in the tree
+        """Find a value in the tree.
 
         Args:
-            data (int): data to find
+            data (int): Value to search for.
 
         Returns:
-            Node: node with data
+            Optional[Node]: Matching node if the value exists, otherwise ``None``.
         """
         if self.root is not None:
             return self._find(data, self.root)
@@ -56,6 +54,15 @@ class Tree:
             return None
 
     def _find(self, data: int, node: Node) -> Optional[Node]:
+        """Search for a value inside the subtree rooted at ``node``.
+
+        Args:
+            data (int): Value to search for.
+            node (Node): Current subtree root used during recursion.
+
+        Returns:
+            Optional[Node]: Matching node if found, otherwise ``None``.
+        """
         if data == node.data:
             return node
         elif (data < node.data and node.left is not None):
@@ -65,25 +72,30 @@ class Tree:
         return None
 
     def deleteTree(self) -> None:
+        """Remove all nodes from the tree."""
         self.root = None
 
     def printTree(self) -> None:
+        """Print the tree using in-order traversal."""
         if self.root is not None:
             self._printInorderTree(self.root)
 
     def _printInorderTree(self, node: Optional[Node]) -> None:
+        """Print the subtree rooted at ``node`` in in-order."""
         if node is not None:
             self._printInorderTree(node.left)
             print(str(node.data) + ' ')
             self._printInorderTree(node.right)
 
     def _printPreorderTree(self, node: Optional[Node]) -> None:
+        """Print the subtree rooted at ``node`` in pre-order."""
         if node is not None:
             print(str(node.data) + ' ')
             self._printPreorderTree(node.left)
             self._printPreorderTree(node.right)
 
     def _printPostorderTree(self, node: Optional[Node]) -> None:
+        """Print the subtree rooted at ``node`` in post-order."""
         if node is not None:
             self._printPostorderTree(node.left)
             self._printPostorderTree(node.right)
