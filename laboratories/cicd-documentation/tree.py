@@ -1,25 +1,27 @@
+from typing import Optional
+
 from node import Node
 
 
 class Tree:
     """ Tree class for binary tree """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """ Constructor for Tree class """
-        self.root = None
+        self.root: Optional[Node] = None
 
-    def getRoot(self):
+    def getRoot(self) -> Optional[Node]:
         """ Method for get root of the tree """
         return self.root
 
-    def add(self, data):
+    def add(self, data: int) -> None:
         """ Method for add data to the tree """
         if self.root is None:
             self.root = Node(data)
         else:
             self._add(data, self.root)
 
-    def _add(self, data, node):
+    def _add(self, data: int, node: Node) -> None:
         """Method for add data to the tree
 
         Args:
@@ -39,7 +41,7 @@ class Tree:
             else:
                 node.right = Node(data)
 
-    def find(self, data):
+    def find(self, data: int) -> Optional[Node]:
         """Method for find data in the tree
 
         Args:
@@ -53,33 +55,36 @@ class Tree:
         else:
             return None
 
-    def _find(self, data, node):
+    def _find(self, data: int, node: Node) -> Optional[Node]:
         if data == node.data:
             return node
         elif (data < node.data and node.left is not None):
             return self._find(data, node.left)
         elif (data > node.data and node.right is not None):
             return self._find(data, node.right)
+        return None
 
-    def deleteTree(self):
+    def deleteTree(self) -> None:
         self.root = None
 
-    def printTree(self):
+    def printTree(self) -> None:
         if self.root is not None:
             self._printInorderTree(self.root)
 
-    def _printInorderTree(self, node):
+    def _printInorderTree(self, node: Optional[Node]) -> None:
         if node is not None:
             self._printInorderTree(node.left)
             print(str(node.data) + ' ')
             self._printInorderTree(node.right)
 
-    def _printPreorderTree(self, node):
-        # TODO
-        pass
+    def _printPreorderTree(self, node: Optional[Node]) -> None:
+        if node is not None:
+            print(str(node.data) + ' ')
+            self._printPreorderTree(node.left)
+            self._printPreorderTree(node.right)
 
-    def _printPostorderTree(self, node):
-        # TODO
-        pass
-
-
+    def _printPostorderTree(self, node: Optional[Node]) -> None:
+        if node is not None:
+            self._printPostorderTree(node.left)
+            self._printPostorderTree(node.right)
+            print(str(node.data) + ' ')
